@@ -1,0 +1,12 @@
+{
+  "title": "我的笔记",
+  "author": "Lawwaikit",
+  "language": "zh-hans",
+  "plugins": [
+    "theme-default", 
+    "highlight"
+  ],
+  "styles": {
+    "website": "styles/website.css"
+  }
+}
