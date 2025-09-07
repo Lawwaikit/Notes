@@ -4,9 +4,13 @@
   "language": "zh-hans",
   "plugins": [
     "theme-default", 
-    "highlight"
+    "highlight",
+    "code"
   ],
   "styles": {
     "website": "styles/website.css"
+  },
+  "structure": {
+    "readme": "introduction.md"
   }
 }
