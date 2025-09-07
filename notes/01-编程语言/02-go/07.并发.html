@@ -1,0 +1,805 @@
+
+<!DOCTYPE HTML>
+<html lang="zh-hans" >
+    <head>
+        <meta charset="UTF-8">
+        <title>07.并发 · 我的笔记</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="description" content="">
+        <meta name="generator" content="HonKit 6.0.3">
+        <meta name="author" content="Lawwaikit">
+        
+        
+    
+    <link rel="stylesheet" href="../../../gitbook/style.css">
+
+    
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/@honkit/honkit-plugin-highlight/website.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/gitbook-plugin-search/search.css">
+                
+            
+                
+                <link rel="stylesheet" href="../../../gitbook/@honkit/honkit-plugin-fontsettings/website.css">
+                
+            
+        
+
+    
+
+    
+        
+        <link rel="stylesheet" href="../../../styles/website.css">
+        
+    
+
+        
+    
+    
+    <meta name="HandheldFriendly" content="true"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="../../../gitbook/images/apple-touch-icon-precomposed-152.png">
+    <link rel="shortcut icon" href="../../../gitbook/images/favicon.ico" type="image/x-icon">
+
+    
+    <link rel="next" href="../../02-测试开发技能/00-README.html" />
+    
+    
+    <link rel="prev" href="06.接口.html" />
+    
+
+    </head>
+    <body>
+        
+<div class="book honkit-cloak">
+    <div class="book-summary">
+        
+            
+<div id="book-search-input" role="search">
+    <input type="text" placeholder="输入并搜索" />
+</div>
+
+            
+                <nav role="navigation">
+                
+
+
+<ul class="summary">
+    
+    
+
+    
+
+    
+        
+        
+    
+        <li class="chapter " data-level="1.1" data-path="../../../">
+            
+                <a href="../../../">
+            
+                    
+                    README
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2" data-path="../00-README.html">
+            
+                <a href="../00-README.html">
+            
+                    
+                    01-编程语言
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.1" data-path="../01-Python/00-README.html">
+            
+                <a href="../01-Python/00-README.html">
+            
+                    
+                    01-Python
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2" data-path="00-README.html">
+            
+                <a href="00-README.html">
+            
+                    
+                    02-go
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.2.2.1" data-path="01.基础语法.html">
+            
+                <a href="01.基础语法.html">
+            
+                    
+                    01.基础语法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.2" data-path="02.数据结构.html">
+            
+                <a href="02.数据结构.html">
+            
+                    
+                    02.数据结构
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.3" data-path="03.流程控制.html">
+            
+                <a href="03.流程控制.html">
+            
+                    
+                    03.流程控制
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.4" data-path="04.函数.html">
+            
+                <a href="04.函数.html">
+            
+                    
+                    04.函数
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.5" data-path="05.方法.html">
+            
+                <a href="05.方法.html">
+            
+                    
+                    05.方法
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.2.2.6" data-path="06.接口.html">
+            
+                <a href="06.接口.html">
+            
+                    
+                    06.接口
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter active" data-level="1.2.2.7" data-path="07.并发.html">
+            
+                <a href="07.并发.html">
+            
+                    
+                    07.并发
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3" data-path="../../02-测试开发技能/00-README.html">
+            
+                <a href="../../02-测试开发技能/00-README.html">
+            
+                    
+                    02-测试开发技能
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.1" data-path="../../02-测试开发技能/01-测试设计/00-README.html">
+            
+                <a href="../../02-测试开发技能/01-测试设计/00-README.html">
+            
+                    
+                    01-测试设计
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2" data-path="../../02-测试开发技能/02-CICD+DevOps/00-README.html">
+            
+                <a href="../../02-测试开发技能/02-CICD+DevOps/00-README.html">
+            
+                    
+                    02-CICD+DevOps
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.2.1" data-path="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/00-README.html">
+            
+                <a href="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/00-README.html">
+            
+                    
+                    01-Docker学习
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.2.1.1" data-path="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/01-Docker安装配置.html">
+            
+                <a href="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/01-Docker安装配置.html">
+            
+                    
+                    01-Docker安装配置
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.1.2" data-path="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/02-Docker命令.html">
+            
+                <a href="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/02-Docker命令.html">
+            
+                    
+                    02-Docker命令
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.1.3" data-path="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/03-Dockerfile.html">
+            
+                <a href="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/03-Dockerfile.html">
+            
+                    
+                    03-Dockerfile
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.1.4" data-path="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/04-docker-compose.html">
+            
+                <a href="../../02-测试开发技能/02-CICD+DevOps/01-Docker学习/04-docker-compose.html">
+            
+                    
+                    04-docker-compose
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.2" data-path="../../02-测试开发技能/02-CICD+DevOps/02-监控系统/00-README.html">
+            
+                <a href="../../02-测试开发技能/02-CICD+DevOps/02-监控系统/00-README.html">
+            
+                    
+                    02-监控系统
+            
+                </a>
+            
+
+            
+            <ul class="articles">
+                
+    
+        <li class="chapter " data-level="1.3.2.2.1" data-path="../../02-测试开发技能/02-CICD+DevOps/02-监控系统/01-Prometheus/00-README.html">
+            
+                <a href="../../02-测试开发技能/02-CICD+DevOps/02-监控系统/01-Prometheus/00-README.html">
+            
+                    
+                    01-Prometheus
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.3.2.2.2" data-path="../../02-测试开发技能/02-CICD+DevOps/02-监控系统/02-Grafana/00-README.html">
+            
+                <a href="../../02-测试开发技能/02-CICD+DevOps/02-监控系统/02-Grafana/00-README.html">
+            
+                    
+                    02-Grafana
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+
+            </ul>
+            
+        </li>
+    
+        <li class="chapter " data-level="1.4" data-path="../../03-计算机基础/00-README.html">
+            
+                <a href="../../03-计算机基础/00-README.html">
+            
+                    
+                    03-计算机基础
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.5" data-path="../../2025-08-20 学习路线图.html">
+            
+                <a href="../../2025-08-20 学习路线图.html">
+            
+                    
+                    2025-08-20 学习路线图
+            
+                </a>
+            
+
+            
+        </li>
+    
+        <li class="chapter " data-level="1.6" data-path="../../7 天 Docker 学习打卡计划.html">
+            
+                <a href="../../7 天 Docker 学习打卡计划.html">
+            
+                    
+                    7 天 Docker 学习打卡计划
+            
+                </a>
+            
+
+            
+        </li>
+    
+
+    
+
+    <li class="divider"></li>
+
+    <li>
+        <a href="https://github.com/honkit/honkit" target="blank" class="gitbook-link">
+            本书使用 HonKit 发布
+        </a>
+    </li>
+</ul>
+
+
+                </nav>
+            
+        
+    </div>
+
+    <div class="book-body">
+        
+            <div class="body-inner">
+                
+                    
+
+<div class="book-header" role="navigation">
+    
+
+    <!-- Title -->
+    <h1>
+        <i class="fa fa-circle-o-notch fa-spin"></i>
+        <a href="../../.." >07.并发</a>
+    </h1>
+</div>
+
+
+
+
+                    <div class="page-wrapper" tabindex="-1" role="main">
+                        <div class="page-inner">
+                            
+<div id="book-search-results">
+    <div class="search-noresults">
+    
+                                <section class="normal markdown-section">
+                                
+                                <h2 id="goruntine">Goruntine</h2>
+<p>在调用函数的时候在前面加上go关键字，就可以为一个函数创建一个goroutine</p>
+<pre><code class="lang-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-keyword">go</span> hello() <span class="hljs-comment">// 启动另外一个goroutine去执行hello函数</span>
+    fmt.Println(<span class="hljs-string">"main goroutine done!"</span>)
+}
+</code></pre>
+<h2 id="channel通道">channel通道</h2>
+<p>channel是一种类型，一种引用类型。声明通道类型的格式如下</p>
+<pre><code class="lang-go"><span class="hljs-keyword">var</span> 变量 <span class="hljs-keyword">chan</span> 元素类型
+<span class="hljs-comment">//通道是引用类型，通道类型的空值是nil。</span>
+<span class="hljs-keyword">var</span> ch <span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>
+fmt.Println(ch) <span class="hljs-comment">// &lt;nil&gt;</span>
+</code></pre>
+<p>举几个例子：</p>
+<pre><code class="lang-go"><span class="hljs-keyword">var</span> ch1 <span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>   <span class="hljs-comment">// 声明一个传递整型的通道</span>
+<span class="hljs-keyword">var</span> ch2 <span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>  <span class="hljs-comment">// 声明一个传递布尔型的通道</span>
+<span class="hljs-keyword">var</span> ch3 <span class="hljs-keyword">chan</span> []<span class="hljs-type">int</span> <span class="hljs-comment">// 声明一个传递int切片的通道</span>
+</code></pre>
+<p>创建channel的格式如下，channel的缓冲大小是可选的。</p>
+<pre><code>make(chan 元素类型, [缓冲大小])
+</code></pre><p>举几个例子：</p>
+<pre><code class="lang-go">ch4 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)
+ch5 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">bool</span>)
+ch6 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> []<span class="hljs-type">int</span>)
+</code></pre>
+<h3 id="channel操作">channel操作</h3>
+<p>发送、接收、关闭</p>
+<pre><code class="lang-go">ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)
+ch &lt;- <span class="hljs-number">10</span> <span class="hljs-comment">// 把10发送到ch中</span>
+x := &lt;- ch <span class="hljs-comment">// 从ch中接收值并赋值给变量x</span>
+&lt;-ch       <span class="hljs-comment">// 从ch中接收值，忽略结果</span>
+<span class="hljs-comment">//通过调用内置的close函数来关闭通道。</span>
+ <span class="hljs-built_in">close</span>(ch)
+</code></pre>
+<h3 id="无缓冲通道和有缓冲通道">无缓冲通道和有缓冲通道</h3>
+<h4 id="无缓冲区的通道">无缓冲区的通道</h4>
+<ul>
+<li>无缓冲通道上的发送操作会阻塞，直到另一个goroutine在该通道上执行接收操作，这时值才能发送成功，两个goroutine将继续执行。<pre><code class="lang-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+  ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)
+  ch &lt;- <span class="hljs-number">10</span>    <span class="hljs-comment">//会阻塞</span>
+  fmt.Println(<span class="hljs-string">"发送成功"</span>)
+}
+</code></pre>
+</li>
+<li>相反，如果接收操作先执行，接收方的goroutine将阻塞，直到另一个goroutine在该通道上发送一个值。<pre><code class="lang-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+  ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)
+  &lt;- ch <span class="hljs-comment">//会阻塞</span>
+  fmt.Println(<span class="hljs-string">"接收成功"</span>)
+}
+</code></pre>
+使用无缓冲通道进行通信将导致发送和接收的goroutine同步化。因此，无缓冲通道也被称为同步通道。</li>
+</ul>
+<h4 id="有缓冲区的通道">有缓冲区的通道</h4>
+<p>可以在使用make函数初始化通道的时候为其指定通道的容量，例如：</p>
+<pre><code class="lang-go"><span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+    ch := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>, <span class="hljs-number">1</span>) <span class="hljs-comment">// 创建一个容量为1的有缓冲区通道</span>
+    ch &lt;- <span class="hljs-number">10</span>
+    fmt.Println(<span class="hljs-string">"发送成功"</span>)
+}
+</code></pre>
+<h3 id="close">close()</h3>
+<p>可以通过内置的close()函数关闭channel（如果你的管道不往里存值或者取值的时候一定记得关闭管道）</p>
+<pre><code class="lang-go"><span class="hljs-keyword">package</span> main
+
+<span class="hljs-keyword">import</span> <span class="hljs-string">"fmt"</span>
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span> {
+    c := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)
+    <span class="hljs-keyword">go</span> <span class="hljs-function"><span class="hljs-keyword">func</span><span class="hljs-params">()</span></span> {
+        <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++ {
+            c &lt;- i
+        }
+        <span class="hljs-built_in">close</span>(c)
+    }()
+    <span class="hljs-keyword">for</span> {
+        <span class="hljs-keyword">if</span> data, ok := &lt;-c; ok {
+            fmt.Println(data)
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-keyword">break</span>
+        }
+    }
+    fmt.Println(<span class="hljs-string">"main结束"</span>)
+}
+</code></pre>
+<h3 id="通道循环取值">通道循环取值</h3>
+<pre><code class="lang-go">ch2 := <span class="hljs-built_in">make</span>(<span class="hljs-keyword">chan</span> <span class="hljs-type">int</span>)    
+<span class="hljs-keyword">for</span> i := <span class="hljs-keyword">range</span> ch2 { <span class="hljs-comment">// 通道关闭后会退出for range循环</span>
+    fmt.Println(i)
+}
+</code></pre>
+<h3 id="单向通道">单向通道</h3>
+<p><a href="https://www.topgoer.com/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/channel.html#%E5%8D%95%E5%90%91%E9%80%9A%E9%81%93" target="_blank">单向通道</a></p>
+<h2 id="定时器">定时器</h2>
+<p><a href="https://www.topgoer.com/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/%E5%AE%9A%E6%97%B6%E5%99%A8.html" target="_blank">并发编程/定时器</a></p>
+<ul>
+<li><p>Timer：时间到了，执行只执行1次</p>
+</li>
+<li><p>Ticker：时间到了，多次执行</p>
+</li>
+</ul>
+<h2 id="select">select</h2>
+<p>在某些场景下我们需要同时从多个通道接收数据。</p>
+<p>select的使用类似于switch语句，它有一系列case分支和一个默认的分支。每个case会对应一个通道的通信（接收或发送）过程。select会一直等待，直到某个case的通信操作完成时，就会执行case分支对应的语句。具体格式如下：</p>
+<pre><code class="lang-go"><span class="hljs-keyword">select</span> {
+<span class="hljs-keyword">case</span> &lt;-chan1:
+<span class="hljs-comment">// 如果chan1成功读到数据，则进行该case处理语句</span>
+<span class="hljs-keyword">case</span> chan2 &lt;- <span class="hljs-number">1</span>:
+<span class="hljs-comment">// 如果成功向chan2写入数据，则进行该case处理语句</span>
+<span class="hljs-keyword">default</span>:
+<span class="hljs-comment">// 如果上面都没有成功，则进入default处理流程</span>
+}
+</code></pre>
+<ul>
+<li>select可以同时监听一个或多个channel，直到其中一个channel ready</li>
+<li><p>如果多个channel同时ready，则随机选择一个执行</p>
+</li>
+<li><p>可以用于判断管道是否存满</p>
+</li>
+</ul>
+<pre><code class="lang-go"><span class="hljs-keyword">select</span> {
+<span class="hljs-comment">// 写数据</span>
+<span class="hljs-keyword">case</span> ch &lt;- <span class="hljs-string">"hello"</span>:
+fmt.Println(<span class="hljs-string">"write hello"</span>)
+<span class="hljs-keyword">default</span>:
+fmt.Println(<span class="hljs-string">"channel full"</span>)
+}
+</code></pre>
+<h2 id="并发安全和锁">并发安全和锁</h2>
+<p>有时候在Go代码中可能会存在多个goroutine同时操作一个资源（临界区），这种情况会发生竞态问题（数据竞态）。</p>
+<h3 id="syncmutex互斥锁">sync.Mutex互斥锁</h3>
+<p>它能够保证同时只有一个goroutine可以访问共享资源。</p>
+<pre><code class="lang-go"><span class="hljs-keyword">var</span> lock sync.Mutex
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">add</span><span class="hljs-params">()</span></span> {
+    <span class="hljs-keyword">for</span> i := <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5000</span>; i++ {
+        lock.Lock() <span class="hljs-comment">// 加锁</span>
+        x = x + <span class="hljs-number">1</span>
+        lock.Unlock() <span class="hljs-comment">// 解锁</span>
+    }
+    wg.Done()
+}
+</code></pre>
+<h3 id="syncrwmutex读写互斥锁">sync.RWMutex读写互斥锁</h3>
+<p>互斥锁是完全互斥的，但是有很多实际的场景下是读多写少的，当我们并发的去读取一个资源不涉及资源修改的时候是没有必要加锁的，这种场景下使用读写锁是更好的一种选择。</p>
+<p>读写锁分为两种：读锁和写锁。</p>
+<ul>
+<li>当一个goroutine获取读锁之后，其他的goroutine如果是获取读锁会继续获得锁，如果是获取写锁就会等待；</li>
+<li>当一个goroutine获取写锁之后，其他的goroutine无论是获取读锁还是写锁都会等待。</li>
+</ul>
+<pre><code class="lang-go"><span class="hljs-keyword">var</span> rwlock sync.RWMutex
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">write</span><span class="hljs-params">()</span></span> {
+    rwlock.Lock() <span class="hljs-comment">// 加写锁</span>
+    x = x + <span class="hljs-number">1</span>
+    rwlock.Unlock()                   <span class="hljs-comment">// 解写锁</span>
+    wg.Done()
+}
+
+<span class="hljs-function"><span class="hljs-keyword">func</span> <span class="hljs-title">read</span><span class="hljs-params">()</span></span> {
+    rwlock.RLock()               <span class="hljs-comment">// 加读锁</span>
+    rwlock.RUnlock()             <span class="hljs-comment">// 解读锁</span>
+    wg.Done()
+}
+</code></pre>
+<h3 id="syncwaitgroup">sync.WaitGroup</h3>
+<p>Go语言中可以使用sync.WaitGroup来实现并发任务的同步。 sync.WaitGroup有以下几个方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法名</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(wg * WaitGroup) Add(delta int)</td>
+<td>计数器+delta</td>
+</tr>
+<tr>
+<td>(wg *WaitGroup) Done()</td>
+<td>计数器-1</td>
+</tr>
+<tr>
+<td>(wg *WaitGroup) Wait()</td>
+<td>阻塞直到计数器变为0</td>
+</tr>
+</tbody>
+</table>
+<p>sync.WaitGroup内部维护着一个计数器，计数器的值可以增加和减少。例如当我们启动了N 个并发任务时，就将计数器值增加N。每个任务完成时通过调用Done()方法将计数器减1。通过调用Wait()来等待并发任务执行完，当计数器值为0时，表示所有并发任务已经完成。</p>
+<h3 id="synconce">sync.Once</h3>
+<p>确保某些操作在高并发的场景下只执行一次，例如只加载一次配置文件、只关闭一次通道等。</p>
+<p><a href="https://www.topgoer.com/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/sync.html" target="_blank">sync.Once</a></p>
+<h3 id="syncmap">sync.Map</h3>
+<p>Go语言中内置的map不是并发安全的<a href="https://www.topgoer.com/%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/sync.html" target="_blank">sync.Map</a></p>
+
+                                
+                                </section>
+                            
+    </div>
+    <div class="search-results">
+        <div class="has-results">
+            
+            <h1 class="search-results-title"><span class='search-results-count'></span> results matching "<span class='search-query'></span>"</h1>
+            <ul class="search-results-list"></ul>
+            
+        </div>
+        <div class="no-results">
+            
+            <h1 class="search-results-title">No results matching "<span class='search-query'></span>"</h1>
+            
+        </div>
+    </div>
+</div>
+
+                        </div>
+                    </div>
+                
+            </div>
+
+            
+                
+                <a href="06.接口.html" class="navigation navigation-prev " aria-label="Previous page: 06.接口">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                
+                
+                <a href="../../02-测试开发技能/00-README.html" class="navigation navigation-next " aria-label="Next page: 02-测试开发技能">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+                
+            
+        
+    </div>
+
+    <script>
+        var gitbook = gitbook || [];
+        gitbook.push(function() {
+            gitbook.page.hasChanged({"page":{"title":"07.并发","level":"1.2.2.7","depth":3,"next":{"title":"02-测试开发技能","level":"1.3","depth":1,"path":"notes/02-测试开发技能/00-README.md","ref":"notes/02-测试开发技能/00-README.md","articles":[{"title":"01-测试设计","level":"1.3.1","depth":2,"path":"notes/02-测试开发技能/01-测试设计/00-README.md","ref":"notes/02-测试开发技能/01-测试设计/00-README.md","articles":[]},{"title":"02-CICD+DevOps","level":"1.3.2","depth":2,"path":"notes/02-测试开发技能/02-CICD+DevOps/00-README.md","ref":"notes/02-测试开发技能/02-CICD+DevOps/00-README.md","articles":[{"title":"01-Docker学习","level":"1.3.2.1","depth":3,"path":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/00-README.md","ref":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/00-README.md","articles":[{"title":"01-Docker安装配置","level":"1.3.2.1.1","depth":4,"path":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/01-Docker安装配置.md","ref":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/01-Docker安装配置.md","articles":[]},{"title":"02-Docker命令","level":"1.3.2.1.2","depth":4,"path":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/02-Docker命令.md","ref":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/02-Docker命令.md","articles":[]},{"title":"03-Dockerfile","level":"1.3.2.1.3","depth":4,"path":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/03-Dockerfile.md","ref":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/03-Dockerfile.md","articles":[]},{"title":"04-docker-compose","level":"1.3.2.1.4","depth":4,"path":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/04-docker-compose.md","ref":"notes/02-测试开发技能/02-CICD+DevOps/01-Docker学习/04-docker-compose.md","articles":[]}]},{"title":"02-监控系统","level":"1.3.2.2","depth":3,"path":"notes/02-测试开发技能/02-CICD+DevOps/02-监控系统/00-README.md","ref":"notes/02-测试开发技能/02-CICD+DevOps/02-监控系统/00-README.md","articles":[{"title":"01-Prometheus","level":"1.3.2.2.1","depth":4,"path":"notes/02-测试开发技能/02-CICD+DevOps/02-监控系统/01-Prometheus/00-README.md","ref":"notes/02-测试开发技能/02-CICD+DevOps/02-监控系统/01-Prometheus/00-README.md","articles":[]},{"title":"02-Grafana","level":"1.3.2.2.2","depth":4,"path":"notes/02-测试开发技能/02-CICD+DevOps/02-监控系统/02-Grafana/00-README.md","ref":"notes/02-测试开发技能/02-CICD+DevOps/02-监控系统/02-Grafana/00-README.md","articles":[]}]}]}]},"previous":{"title":"06.接口","level":"1.2.2.6","depth":3,"path":"notes/01-编程语言/02-go/06.接口.md","ref":"notes/01-编程语言/02-go/06.接口.md","articles":[]},"dir":"ltr"},"config":{"plugins":["theme-default","highlight"],"styles":{"website":"styles/website.css"},"pluginsConfig":{"highlight":{},"search":{},"lunr":{"maxIndexSize":1000000,"ignoreSpecialCharacters":false},"fontsettings":{"theme":"white","family":"sans","size":2},"theme-default":{"styles":{"website":"styles/website.css","pdf":"styles/pdf.css","epub":"styles/epub.css","mobi":"styles/mobi.css","ebook":"styles/ebook.css","print":"styles/print.css"},"showLevel":false}},"theme":"default","author":"Lawwaikit","pdf":{"pageNumbers":true,"fontSize":12,"fontFamily":"Arial","paperSize":"a4","chapterMark":"pagebreak","pageBreaksBefore":"/","margin":{"right":62,"left":62,"top":56,"bottom":56},"embedFonts":false},"structure":{"langs":"LANGS.md","readme":"README.md","glossary":"GLOSSARY.md","summary":"SUMMARY.md"},"variables":{},"title":"我的笔记","language":"zh-hans","gitbook":"*"},"file":{"path":"notes/01-编程语言/02-go/07.并发.md","mtime":"2025-09-04T17:07:23.745Z","type":"markdown"},"gitbook":{"version":"6.0.3","time":"2025-09-07T08:52:06.502Z"},"basePath":"../../..","book":{"language":""}});
+        });
+    </script>
+</div>
+
+        
+    <noscript>
+        <style>
+            .honkit-cloak {
+                display: block !important;
+            }
+        </style>
+    </noscript>
+    <script>
+        // Restore sidebar state as critical path for prevent layout shift
+        function __init__getSidebarState(defaultValue){
+            var baseKey = "";
+            var key = baseKey + ":sidebar";
+            try {
+                var value = localStorage[key];
+                if (value === undefined) {
+                    return defaultValue;
+                }
+                var parsed = JSON.parse(value);
+                return parsed == null ? defaultValue : parsed;
+            } catch (e) {
+                return defaultValue;
+            }
+        }
+        function __init__restoreLastSidebarState() {
+            var isMobile = window.matchMedia("(max-width: 600px)").matches;
+            if (isMobile) {
+                // Init last state if not mobile
+                return;
+            }
+            var sidebarState = __init__getSidebarState(true);
+            var book = document.querySelector(".book");
+            // Show sidebar if it enabled
+            if (sidebarState && book) {
+                book.classList.add("without-animation", "with-summary");
+            }
+        }
+
+        try {
+            __init__restoreLastSidebarState();
+        } finally {
+            var book = document.querySelector(".book");
+            book.classList.remove("honkit-cloak");
+        }
+    </script>
+    <script src="../../../gitbook/gitbook.js"></script>
+    <script src="../../../gitbook/theme.js"></script>
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search-engine.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-search/search.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/lunr.min.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/gitbook-plugin-lunr/search-lunr.js"></script>
+        
+    
+        
+        <script src="../../../gitbook/@honkit/honkit-plugin-fontsettings/fontsettings.js"></script>
+        
+    
+
+    </body>
+</html>
+
