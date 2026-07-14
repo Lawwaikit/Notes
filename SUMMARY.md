@@ -1,6 +1,5 @@
 # Summary
 
-* [介绍](introduction.md)
 * [01-编程语言](Notes/01-编程语言/00-README.md)
   * [01-Python](Notes/01-编程语言/01-Python/00-README.md)
   * [02-go](Notes/01-编程语言/02-go/00-README.md)
