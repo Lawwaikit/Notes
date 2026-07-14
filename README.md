@@ -12,11 +12,12 @@ Notes/                  # 全部笔记内容（Markdown）
 ├── 00-README.md       # 顶层导航
 ├── 01-编程语言/        # Python、Go
 ├── 02-测试工程/        # 测试设计、CI/CD、自动化
-├── 03-AI人工智能/      # MCP 等
+├── 03-AI人工智能/     # MCP 等
 └── 99-计算机基础/      # 操作系统、网络、数据库
 SUMMARY.md             # 站点目录（GitBook 据此生成导航）
 README.md              # 本文件，同时是站点首页
-introduction.md        # 「介绍」页（SUMMARY 的第一项）
+.memory/               # 个人上下文 / 计划快照（点目录，跨设备同步用，不进站点目录）
+.workbuddy/            # 工作区记忆（跨设备同步用，不进站点目录）
 zimages/               # 图片资源（已并入 Notes/ 内）
 ```
 
