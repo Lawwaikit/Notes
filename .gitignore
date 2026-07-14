@@ -2,3 +2,16 @@
 .obsidian/
 .idea/
 _book/
+.venv/
+site/
+migrate.py
+# --- MkDocs 实验残留（已弃用，不入库）---
+.venv/
+site/
+style_preview/
+Notes/stylesheets/
+migrate.py
+gen_styles.py
+fix_gitbook.py
+mkdocs.yml
+mkdocs_*.yml
