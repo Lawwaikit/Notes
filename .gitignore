@@ -15,3 +15,5 @@ gen_styles.py
 fix_gitbook.py
 mkdocs.yml
 mkdocs_*.yml
+
+.workbuddy/
