@@ -3,13 +3,13 @@ Compose 是用于定义和运行多容器 Docker 应用程序的工具。通过 
 
 ```bash
 # 构建并启动
-docker-compose up --build -d
+docker compose up --build -d
 
 # 查看日志
-docker-compose logs -f flask
+docker compose logs -f flask
 
 # 扩容 Flask 到 3 个副本
-docker-compose up -d --scale flask=3
+docker compose up -d --scale flask=3
 ```
 
 ## yml文件
