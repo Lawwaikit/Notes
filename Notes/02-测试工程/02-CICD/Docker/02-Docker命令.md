@@ -10,7 +10,7 @@ docker rmi <image_id>  # 删除镜像
 #其他操作查看 docker image COMMAND --help
 ```
 
-## 容器操作
+## docker container 容器操作
 ```bash
 docker ps  # 列出正在运行的容器
 docker ps -a  # 列出所有容器
@@ -87,7 +87,15 @@ docker stats
 docker stats app
 ```
 
-compose命令
+## compose命令
+
+
+
 ```bash
-docker compose ls # 查看compose项目
+# 查看所有compose项目
+docker compose ls 
+
+# 执行以下命令来启动应用程序， -d为后台运行
+docker compose up -d
+
 ```
