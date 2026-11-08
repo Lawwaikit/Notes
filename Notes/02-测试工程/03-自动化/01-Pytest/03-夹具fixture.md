@@ -1,5 +1,3 @@
-# pytest 学习笔记：Fixtures (固件)
-
 ## 1. 什么是 Fixtures？
 
 Fixture 是为测试提供**上下文环境**的函数。它可以用来：

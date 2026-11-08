@@ -1,0 +1,6 @@
+{
+  "things-style@@h2-no-underline": true,
+  "things-style@@h1-underline": false,
+  "things-style@@h1-small-caps": false,
+  "things-style@@h2-color": "#2EF256"
+}

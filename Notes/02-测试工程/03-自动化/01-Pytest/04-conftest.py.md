@@ -1,14 +1,51 @@
-# 介绍
+
+`conftest.py` 是一个**地方性插件配置文件**。它具有以下特性：
+
+- **自动发现**：pytest 会自动识别目录下的 `conftest.py`，无需在测试文件中手动 `import`。
+- **层级继承**：
+    - 根目录下的 `conftest.py` 对整个项目生效。
+    - 子目录下的 `conftest.py` 只对该目录及其子目录生效（会覆盖或扩展根目录的配置）。
+
+# 核心用途
+
+## A. 共享夹具 Fixtures
+
+这是最常见的用途。将通用的登录、数据库连接等 fixture 放在这里，保持测试代码简洁。
+
+```Python
+# conftest.py
+import pytest
+
+@pytest.fixture(scope="session")
+def api_client():
+    # 全局只初始化一次的客户端
+    client = "API_CLIENT_INSTANCE"
+    return client
+```
+
+## B. conftest.py 的执行顺序
+
+了解加载顺序有助于排查 Bug：
+
+1. **Root conftest**: 首先加载项目根目录的文件。
+2. **Sub-directory conftests**: 接着按照目录层级逐层加载。
+3. **Test Modules**: 最后加载具体的测试文件。
+
+注意事项 ⚠️：
+1. 不要手动`import conftest`：这样做会导致模块被加载两次，可能会引发难以排查的冲突。
+2. 文件名固定：必须叫 `conftest.py`，写错一个字母它就失效了。
+
+## C. 钩子函数 hook functions
+
 在 **pytest** 中，**钩子函数（hook functions）** 是 pytest 提供的一种扩展机制，允许你在测试生命周期的不同阶段插入自定义逻辑，从而改变或增强 pytest 的默认行为。
 
 Pytest 的钩子函数机制是基于插件系统的，其核心原理如下：
 
 1. **插件架构**：Pytest 通过 setuptools 入口点发现插件，所有钩子函数都通过插件形式实现
 2. **钩子调用点**：Pytest 在测试执行的各个阶段预留了特定的调用点（hook点）
-3. **执行顺序**：钩子函数按插件注册顺序执行，除非使用 `tryfirst` 或 `trylast` 标记
-4. **自动发现**：Pytest 会自动发现 `conftest.py` 文件和已安装插件中的钩子函数
+3. **执行顺序**：钩子函数按插件注册顺序执行，除非使用 `tryfirst` 或 `trylast` 标记
+4. **自动发现**：Pytest 会自动发现 `conftest.py` 文件和已安装插件中的钩子函数
 5. **参数传递**：每个钩子函数都有特定的参数签名，Pytest 会自动传入相关参数
-
 
 钩子函数通常定义在 **`conftest.py`** 文件中，并且函数名和签名必须符合 pytest 预定义的钩子规范。
 你可以通过钩子函数干预 pytest 的运行行为，例如：修改测试报告、自定义命令行参数。
@@ -16,29 +53,26 @@ Pytest 的钩子函数机制是基于插件系统的，其核心原理如下：
 参考资料：
 [一文搞懂Pytest 钩子函数](https://www.cnblogs.com/tester001/p/18967494 "发布于 2025-07-05 17:01")
 
- ## 常用 pytest 钩子函数
+### 常用 pytest 钩子函数
 
-|钩子函数|触发时机|常见用途|
-|---|---|---|
-|`pytest_configure(config)`|pytest 初始化配置完成后|注册插件、修改配置|
-|`pytest_sessionstart(session)`|测试会话开始前|初始化资源（如数据库连接池）|
-|`pytest_sessionfinish(session, exitstatus)`|测试会话结束后|释放资源、生成报告|
-|`pytest_collection_modifyitems(session, config, items)`|测试用例收集完成后|动态修改测试用例顺序、名称、编码|
-|`pytest_generate_tests(metafunc)`|测试用例参数化阶段|动态生成参数化数据|
-|`pytest_runtest_setup(item)`|每个测试用例执行前|前置条件检查|
-|`pytest_runtest_teardown(item, nextitem)`|每个测试用例执行后|清理操作|
-|`pytest_terminal_summary(terminalreporter, exitstatus, config)`|测试结束后|自定义终端输出总结|
+| 钩子函数                                                            | 触发时机            | 常见用途             |
+| --------------------------------------------------------------- | --------------- | ---------------- |
+| `pytest_configure(config)`                                      | pytest 初始化配置完成后 | 注册插件、修改配置        |
+| `pytest_sessionstart(session)`                                  | 测试会话开始前         | 初始化资源（如数据库连接池）   |
+| `pytest_sessionfinish(session, exitstatus)`                     | 测试会话结束后         | 释放资源、生成报告        |
+| `pytest_collection_modifyitems(session, config, items)`s        | 测试用例收集完成后       | 动态修改测试用例顺序、名称、编码 |
+| `pytest_generate_tests(metafunc)`                               | 测试用例参数化阶段       | 动态生成参数化数据        |
+| `pytest_runtest_setup(item)`                                    | 每个测试用例执行前       | 前置条件检查           |
+| `pytest_runtest_teardown(item, nextitem)`                       | 每个测试用例执行后       | 清理操作             |
+| `pytest_terminal_summary(terminalreporter, exitstatus, config)` | 测试结束后           | 自定义终端输出总结        |
+|                                                                 |                 |                  |
 
+### Pytest 钩子函数常用场景及示例代码
 
+#### 一、测试环境准备与清理
 
-
-
-# Pytest 钩子函数常用场景及示例代码
-
-## 一、测试环境准备与清理
-
-### 1. 全局测试环境准备 
-`pytest_configure` + `pytest_sessionstart`
+全局测试环境准备
+`pytest_configure` + `pytest_sessionstart`
 
 ```python
 # conftest.py
@@ -68,10 +102,9 @@ def pytest_sessionfinish(session, exitstatus):
 - 添加自定义标记说明
 - 全局配置设置
 
-## 二、测试用例动态生成与修改
+#### 二、测试用例动态生成与修改
 
-### 2. 动态参数化测试 
-`pytest_generate_tests`
+动态参数化测试 `pytest_generate_tests`
 
 ```python
 # conftest.py
@@ -90,8 +123,7 @@ def pytest_generate_tests(metafunc):
 - 从外部文件(YAML/JSON)加载测试数据
 - 条件性参数化
 
-### 3. 测试收集后修改 
-`pytest_collection_modifyitems`
+测试收集后修改 `pytest_collection_modifyitems`
 
 ```python
 # conftest.py
@@ -114,10 +146,9 @@ def pytest_collection_modifyitems(config, items):
 - 测试执行顺序调整
 - 批量添加标记
 
-## 三、测试执行过程控制
+#### 三、测试执行过程控制
 
-### 4. 测试前置后置操作 
-`pytest_runtest_setup` + `pytest_runtest_teardown`
+测试前置后置操作 `pytest_runtest_setup` + `pytest_runtest_teardown`
 
 ```python
 # conftest.py
@@ -140,8 +171,8 @@ def pytest_runtest_teardown(item, nextitem):
 - 测试环境检查
 - 测试前后状态记录
 
-### 5. 测试失败重试机制 
-`pytest_runtest_makereport`
+
+测试失败重试机制`pytest_runtest_makereport`
 
 ```python
 # conftest.py
@@ -161,10 +192,9 @@ def pytest_runtest_makereport(item, call):
 - 测试结果增强报告
 - 异常捕获与处理
 
-## 四、自定义命令行选项
+#### 四、自定义命令行选项
 
-### 6. 添加命令行选项 
-`pytest_addoption`
+添加命令行选项`pytest_addoption`
 
 ```python
 # conftest.py
@@ -197,10 +227,9 @@ def pytest_configure(config):
 - 测试行为开关
 - 运行时参数传递
 
-## 五、测试报告定制
+#### 五、测试报告定制
 
-### 7. 定制终端报告 
-`pytest_terminal_summary`
+定制终端报告 `pytest_terminal_summary`
 
 ```python
 # conftest.py
@@ -229,9 +258,9 @@ def pytest_terminal_summary(terminalreporter, exitstatus, config):
 - 关键指标统计
 - 失败测试重点展示
 
-## 六、综合实战案例
+#### 六、综合实战案例
 
-### 8. API 测试自动化框架集成
+API 测试自动化框架集成
 
 ```python
 # conftest.py
@@ -303,51 +332,3 @@ def pytest_terminal_summary(terminalreporter):
 3. API请求耗时统计
 4. 请求/响应记录
 5. API性能报告
-
-## 七、钩子函数执行顺序验证
-
-可以通过以下代码验证关键钩子的执行顺序：
-
-```python
-# conftest.py
-def pytest_configure(config):
-    print("\n[pytest_configure] 配置初始化")
-
-def pytest_sessionstart(session):
-    print("\n[pytest_sessionstart] 会话开始")
-
-def pytest_collection_modifyitems(items):
-    print("\n[pytest_collection_modifyitems] 收集到{}个测试".format(len(items)))
-
-def pytest_runtest_protocol(item, nextitem):
-    print(f"\n[pytest_runtest_protocol] 开始执行 {item.nodeid}")
-
-def pytest_runtest_setup(item):
-    print(f"[pytest_runtest_setup] 设置 {item.nodeid}")
-
-def pytest_runtest_teardown(item, nextitem):
-    print(f"[pytest_runtest_teardown] 清理 {item.nodeid}")
-
-def pytest_sessionfinish(session, exitstatus):
-    print("\n[pytest_sessionfinish] 会话结束，状态码:", exitstatus)
-
-def pytest_unconfigure(config):
-    print("\n[pytest_unconfigure] 配置清理")
-```
-
-执行测试时将看到类似输出：
-
-```less
-[pytest_configure] 配置初始化
-[pytest_sessionstart] 会话开始
-[pytest_collection_modifyitems] 收集到5个测试
-
-[pytest_runtest_protocol] 开始执行 test_sample.py::test_one
-[pytest_runtest_setup] 设置 test_sample.py::test_one
-[pytest_runtest_teardown] 清理 test_sample.py::test_one
-
-[pytest_sessionfinish] 会话结束，状态码: 0
-[pytest_unconfigure] 配置清理
-```
-
-通过合理组合这些钩子函数，可以构建强大的测试框架扩展功能，满足各种自动化测试需求。
