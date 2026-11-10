@@ -697,11 +697,40 @@ GET /health/ready
 - 用连接池的失效连接检测
 - 对于数据库连接初始化、Redis 连接初始化等操作，可以使用带退避机制的重试策略
 
+# Docker服务扩缩容
+
+如果希望创建三个实例：
+`compose.yml`
+```yml
+services:
+  fastapi:
+    build:
+      context: ./fastapi
+      # dockerfile: Dockerfile
+    image: test-platform-fastapi:latest
+    # container_name: test-platform-fastapi
+```
+注释掉`container_name`，否则不能扩容，同时不应该映射宿主机端口
+
+```bash
+docker compose up -d --scale fastapi=3
+```
+
+Docker Compose 会根据服务定义创建三个容器。
+
+
 # nginx负载均衡和服务发现
+
+Nginx 提供了 `upstream` 模块，可以定义一组后端服务器。
+Nginx 默认使用轮询（Round Robin）策略分配请求。假设有三个后端实例，请求会依次分配给不同实例。
+不过，上面的配置存在一个工程问题：容器 IP 可能发生变化，容器扩缩容后，Nginx 配置中的后端地址也需要能够动态更新。
+
+另外，直接使用 `fastapi-1` 这样的容器名称，也不适合动态扩缩容，因为实例数量和名称可能变化。
+还要加入Nginx 动态 DNS 解析
 
 `nginx.conf` 配置如下：
 ```bash
-resolver 127.0.0.11 valid=10s ipv6=off;
+resolver 127.0.0.11 valid=10s ipv6=off;   # 指定Docker DNS地址 为Dns服务器
 
 upstream fastapi_backend {
     zone fastapi_backend 64k;
@@ -720,5 +749,96 @@ server {
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
     }
+}
+```
+
+其中：
+- `127.0.0.11` 是 Docker 用户自定义网络中常见的内置 DNS 地址。
+- `valid=10s` 表示 DNS 解析结果的有效期为 10 秒。
+- `zone` 为 upstream 提供共享内存区域。
+- `resolve` 使 Nginx 动态更新 upstream 中的 DNS 解析结果。
+
+
+# 容器停止与优雅关闭
+
+当请求被分配到容器A时，需要长时间处理，此时执行了缩容命令，将副本数量从三个调整为两个。
+Compose 需要删除一个容器。如果删除的是 A，那么问题来了：A 正在处理的请求应该怎么办？
+直接杀死容器，可能导致请求中断；如果等待请求完成，再退出，就能减少业务中断。
+这就是优雅关闭要解决的问题。
+
+## ### Docker 如何停止容器？
+
+执行 `docker stop` 时，Docker 默认不是立即杀死容器，而是分为两个阶段：
+
+1. 发送 `SIGTERM`：Docker 向容器主进程发送停止信号，通知应用准备退出。
+2. 等待停止宽限期：默认等待 10 秒，容器可以在这段时间内完成清理工作。
+3. 发送 `SIGKILL`：如果进程仍未退出，Docker 强制终止容器中的进程。
+
+### Compose 如何配置停止宽限期？
+可以在 FastAPI 服务中增加：
+
+```yml
+services:
+  fastapi:
+    stop_grace_period: 40s
+```
+
+## fastapi 服务和 Uvicorn 怎么处理
+
+`uvicorn` 支持优雅关闭机制，收到 SIGTERM 后会停止接受新的连接，并尝试完成正在处理的请求，然后退出
+因此，完整的优雅关闭需要满足：
+1. Docker 将 SIGTERM 正确发送给 Uvicorn 主进程。
+2. Uvicorn 能够接收到信号并执行关闭流程。
+3. `stop_grace_period` 足够长，能够覆盖请求处理和清理时间。
+
+Uvicorn 是 FastAPI 的 ASGI 服务器。当 Docker 向 Uvicorn 发送 SIGTERM 时，Uvicorn 会执行自己的关闭流程。
+
+主要包括以下几个步骤：
+1. 停止接受新的连接，避免继续接收新的业务请求。
+2. 等待正在处理的 HTTP 请求完成。
+3. 执行应用的生命周期关闭逻辑，例如 FastAPI 的 `lifespan` 中的清理代码。
+4. 关闭服务器进程并退出。
+
+### 2. Uvicorn 的两个重要配置
+
+Uvicorn 提供了两个与优雅关闭有关的参数
+ `--timeout-graceful-shutdown`： 等待正在处理的请求完成的最长时间          
+ `--timeout-keep-alive`   ：HTTP Keep-Alive 空闲连接的超时时间 
+ 
+
+# 流量排空（Connection Draining）
+
+核心思想：在停止容器之前，先让负载均衡器停止向该实例分配新请求，同时允许已有请求继续完成。
+
+这里需要区分两个概念：
+**健康检查（Healthcheck）**：判断容器内的应用是否处于健康状态。
+**流量排空（Connection Draining）**：控制负载均衡器是否继续向某个实例分配新请求。
+
+而且 **动态 DNS 不等于流量排空**，Docker DNS 负责提供服务名称对应的 IP 地址，Nginx 根据 DNS 更新 upstream 后端地址，但它并不知道某个 FastAPI 实例是否正在执行关闭流程。
+
+## 实现流量排空的第一步——就绪状态（Readiness）
+### 1. 什么是 Readiness？
+
+Readiness 可以理解为应用的就绪状态。
+它回答的问题是：当前实例是否适合接收新的业务请求？
+
+例如，FastAPI 可以提供两个接口：
+- `/health` 判断应用是否正常运行。
+- `/ready` 判断应用是否应该继续接收新流量。
+
+## 让 Nginx 根据就绪状态摘除实例
+
+要让 Nginx 根据后端实例的状态摘除节点，需要额外的健康检查机制。
+
+这里有一个需要区分的知识点：
+开源版 Nginx 的**被动健康检查**和**主动健康检查**不是一回事。
+**被动健康检查**：通过真实业务请求的失败情况判断后端是否异常
+**主动健康检查**：定期主动请求后端健康检查接口，根据响应判断是否摘除节点
+
+Nginx 支持 upstream 的被动健康检查，例如：
+```bash
+upstream fastapi_backend {
+    zone fastapi_backend 64k;
+    server fastapi:8000 resolve max_fails=3 fail_timeout=10s;
 }
 ```

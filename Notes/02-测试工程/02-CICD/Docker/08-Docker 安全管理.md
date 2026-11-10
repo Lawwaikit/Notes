@@ -13,7 +13,6 @@ Docker 主要依赖 Linux 内核提供的机制。
 **cgroups** 解决的是「我能使用多少资源」
 **Capabilities** 解决的是「我能执行哪些特权操作」。
 
-
 # Root 用户与非 Root 用户
 容器应该尽量使用非 Root 用户，在 dockerfile里面可以指定用户
 ```dockerfile
