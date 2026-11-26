@@ -28,7 +28,7 @@
   * [03-自动化](Notes/02-测试工程/03-自动化/00-README.md)
     * [01-Pytest](Notes/02-测试工程/03-自动化/01-Pytest/00-README.md)
       * [01-pytest.ini配置文件](Notes/02-测试工程/03-自动化/01-Pytest/01-pytest.ini配置文件.md)
-      * [pytest 学习笔记：标记 (Marks)](Notes/02-测试工程/03-自动化/01-Pytest/02-标记mark.md)
+      * [pytest 学习笔记：标记 (Marks)](02-标记mark.md)
       * [pytest 学习笔记：Fixtures (固件)](Notes/02-测试工程/03-自动化/01-Pytest/03-夹具fixture.md)
       * [04-conftest.py](Notes/02-测试工程/03-自动化/01-Pytest/04-conftest.py/00-README.md)
         * [pytest 深度进阶：conftest.py 详解](Notes/02-测试工程/03-自动化/01-Pytest/04-conftest.py/01-入门.md)
